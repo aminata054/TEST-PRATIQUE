@@ -3,11 +3,12 @@ import { Mail, Lock } from "lucide-react";
 
 const Register = () => {
   const [email, setEmail] = useState("");
+  const [nom, setNom] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Inscription :", { email, password });
+    console.log("Inscription :", { nom, email, password });
   };
 
   return (
@@ -18,6 +19,25 @@ const Register = () => {
           Inscription
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* nom */}
+          <div>
+            <label htmlFor="nom" className="block text-sm text-[#B4B8C0] mb-1.5">
+              Nom
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5C616B]" />
+              <input
+                id="nom"
+                type="text"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
+                placeholder="John Doe"
+                required
+                className="w-full bg-[#181B21] border border-[#2A2D34] rounded-lg py-2.5 pl-10 pr-3 text-sm text-[#E8E9EC] placeholder:text-[#5C616B] focus:outline-none focus:ring-2 focus:ring-[#5B8DEF]/50 focus:border-[#5B8DEF] transition-colors"
+              />
+            </div>
+          </div>
+          
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm text-[#B4B8C0] mb-1.5">
