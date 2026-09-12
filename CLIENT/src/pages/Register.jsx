@@ -1,14 +1,28 @@
 import { useState } from "react";
 import { Mail, Lock } from "lucide-react";
+import { useAuth } from "../context/AuthContext"; 
 
 const Register = () => {
+  const { register } = useAuth();
   const [email, setEmail] = useState("");
   const [nom, setNom] = useState("");
   const [password, setPassword] = useState("");
+  const [erreur, setErreur] = useState("");
+  const [chargement, setChargement] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Inscription :", { nom, email, password });
+    setErreur("");
+    setChargement(true);
+
+    try {
+      await register(nom, email, password); 
+      window.location.href = "/products";
+    } catch (err) {
+      setErreur(err.message);
+    } finally {
+      setChargement(false);
+    }
   };
 
   return (
@@ -18,6 +32,13 @@ const Register = () => {
         <h1 className="text-2xl font-semibold text-[#E8E9EC] mb-1.5 tracking-tight">
           Inscription
         </h1>
+
+        {erreur && (
+          <div className="mb-4 text-sm text-[#E08A8A] bg-[#3A2226] border border-[#5A3236] rounded-lg px-3 py-2.5">
+            {erreur}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* nom */}
           <div>
@@ -31,13 +52,13 @@ const Register = () => {
                 type="text"
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
-                placeholder="John Doe"
+                placeholder="Ramatoulaye SOW"
                 required
                 className="w-full bg-[#181B21] border border-[#2A2D34] rounded-lg py-2.5 pl-10 pr-3 text-sm text-[#E8E9EC] placeholder:text-[#5C616B] focus:outline-none focus:ring-2 focus:ring-[#5B8DEF]/50 focus:border-[#5B8DEF] transition-colors"
               />
             </div>
           </div>
-          
+
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm text-[#B4B8C0] mb-1.5">
@@ -81,14 +102,15 @@ const Register = () => {
           {/* Bouton de inscription */}
           <button
             type="submit"
-            className="w-full bg-[#5B8DEF] hover:bg-[#7BA3F5] text-[#0F1115] font-medium text-sm rounded-lg py-2.5 transition-colors flex items-center justify-center gap-1.5 mt-2"
+            disabled={chargement}
+            className="w-full bg-[#5B8DEF] hover:bg-[#7BA3F5] disabled:opacity-60 disabled:cursor-not-allowed text-[#0F1115] font-medium text-sm rounded-lg py-2.5 transition-colors flex items-center justify-center gap-1.5 mt-2"
           >
-            S'inscrire
+            {chargement ? "Inscription en cours..." : "S'inscrire"}
           </button>
         </form>
 
         <div className="mt-8 pt-6 border-t border-[#2A2D34] text-center">
-          <p className="text-sm text-[#8A8F98] mb-3">Déja inscrit ?</p>
+          <p className="text-sm text-[#8A8F98] mb-3">Déjà inscrit ?</p>
           <button
             type="button"
             onClick={() => window.location.href = "/login"}
@@ -102,4 +124,4 @@ const Register = () => {
   );
 }
 
-export default Register
+export default Register;

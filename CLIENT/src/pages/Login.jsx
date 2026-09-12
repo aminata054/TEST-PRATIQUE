@@ -1,13 +1,27 @@
 import { useState } from "react";
 import { Mail, Lock } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [erreur, setErreur] = useState("");
+  const [chargement, setChargement] = useState(false);
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Connexion :", { email, password });
+    setErreur("");
+    setChargement(true);
+
+    try {
+      await login(email, password); 
+      window.location.href = "/products";
+    } catch (err) {
+      setErreur(err.message);
+    } finally {
+      setChargement(false);
+    }
   };
 
   return (
@@ -18,6 +32,7 @@ const Login = () => {
           Connexion
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {erreur && <p className="text-sm text-red-400">{erreur}</p>}
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm text-[#B4B8C0] mb-1.5">
@@ -61,9 +76,10 @@ const Login = () => {
           {/* Bouton de connexion */}
           <button
             type="submit"
+            disabled={chargement}
             className="w-full bg-[#5B8DEF] hover:bg-[#7BA3F5] text-[#0F1115] font-medium text-sm rounded-lg py-2.5 transition-colors flex items-center justify-center gap-1.5 mt-2"
           >
-            Se connecter
+            {chargement ? "Connexion..." : "Se connecter"}
           </button>
         </form>
 

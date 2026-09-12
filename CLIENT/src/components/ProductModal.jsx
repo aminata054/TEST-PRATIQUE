@@ -2,12 +2,11 @@ import { useState } from "react";
 import { X } from "lucide-react";
 
 const CHAMPS_VIDES = {
-    nom: "",
-    description: "",
-    prix: "",
-    categorie: "",
-    vendeuseId: "",
-    statut: "disponible",
+  nom: "",
+  description: "",
+  prix: "",
+  categorie: "",
+  statut: "disponible",
 };
 
 const ProductModal = ({ initialData, onClose, onSave }) => {
@@ -83,27 +82,16 @@ const ProductModal = ({ initialData, onClose, onSave }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm text-[#B4B8C0] mb-1.5">ID vendeuse</label>
-              <input
-                value={form.vendeuseId}
-                onChange={handleChange("vendeuseId")}
-                required
-                className="w-full bg-[#0F1115] border border-[#2A2D34] rounded-lg py-2.5 px-3 text-sm text-[#E8E9EC] placeholder:text-[#5C616B] focus:outline-none focus:ring-2 focus:ring-[#5B8DEF]/50 focus:border-[#5B8DEF] transition-colors"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-[#B4B8C0] mb-1.5">Statut</label>
-              <select
-                value={form.statut}
-                onChange={handleChange("statut")}
-                className="w-full bg-[#0F1115] border border-[#2A2D34] rounded-lg py-2.5 px-3 text-sm text-[#E8E9EC] focus:outline-none focus:ring-2 focus:ring-[#5B8DEF]/50 focus:border-[#5B8DEF] transition-colors"
-              >
-                <option value="disponible">Disponible</option>
-                <option value="vendu">Vendu</option>
-              </select>
-            </div>
+          <div>
+            <label className="block text-sm text-[#B4B8C0] mb-1.5">Statut</label>
+            <select
+              value={form.statut}
+              onChange={handleChange("statut")}
+              className="w-full bg-[#0F1115] border border-[#2A2D34] rounded-lg py-2.5 px-3 text-sm text-[#E8E9EC] focus:outline-none focus:ring-2 focus:ring-[#5B8DEF]/50 focus:border-[#5B8DEF] transition-colors"
+            >
+              <option value="disponible">Disponible</option>
+              <option value="vendu">Vendu</option>
+            </select>
           </div>
 
           <button
