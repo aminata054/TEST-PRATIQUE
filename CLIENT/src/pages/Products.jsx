@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import ProductModal from "../components/ProductModal";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/AuthContext";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -58,7 +58,7 @@ const Products = () => {
     if (!window.confirm("Supprimer ce produit ?")) return;
 
     try {
-      const reponse = await fetch(`${API_URL}/produits/${id}`, {
+      const reponse = await fetch(`${API_URL}/products/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -87,7 +87,7 @@ const Products = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(donnees), 
+        body: JSON.stringify(donnees),
       });
 
       const produitRetourne = await reponse.json();
